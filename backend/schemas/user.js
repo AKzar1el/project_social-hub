@@ -12,6 +12,21 @@ export default {
             name: 'image',
             title: 'Image',
             type: 'string'
+        },
+        {
+            name: 'email',
+            title: 'Email',
+            type: 'string'
+        },
+        {
+            name: 'firstName',
+            title: 'FirstName',
+            type: 'string'
+        },
+        {
+            name: 'lastName',
+            title: 'LastName',
+            type: 'string'
         }
     ]
 }

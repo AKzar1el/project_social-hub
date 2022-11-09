@@ -1,0 +1,32 @@
+  useEffect(() => {
+    const initClient = () => {
+          gapi.client.init({
+            clientId: process.env.REACT_APP_GOOGLE_API_TOKEN,
+            scope: ''
+        });
+     };
+     gapi.load('client:auth', initClient);
+  });
+
+  const onSuccess = (res) => {
+    setProfile(res.profileObj);
+    console.log((profile.googleId) > 1);
+    localStorage.setItem('user', JSON.stringify(res.profileObj));
+    if ( (profile.googleId) > 1 ) {
+      const doc = {
+        _type: 'user',
+        _id: profile.googleId,
+        userName: profile.name,
+        image: profile.imageUrl,
+        email: profile.email,
+        firstName: profile.familyName,
+        lastName: profile.givenName,
+      };
+      client.createOrReplace(doc).then(() => {
+        navigate('/', { replace: true });
+      });
+    } 
+  };
+  const onFailure = (err) => {
+    console.log('failed:', err);
+  };

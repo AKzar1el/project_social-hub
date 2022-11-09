@@ -29,7 +29,7 @@ const UserProfile = () => {
   const { userId } = useParams();
 
   const User = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
-
+  console.log(User)
   useEffect(() => {
     const query = userQuery(userId);
     client.fetch(query).then((data) => {
@@ -82,7 +82,7 @@ const UserProfile = () => {
             {shortName}
           </h1>
           <div className="absolute top-0 z-1 right-0 p-2">
-            {userId === User.googleId && (
+            {userId === User.sub && (
               <GoogleLogout
                 clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
                 render={(renderProps) => (

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/black.mp4';
 import logo from '../assets/logowhite.png';
 import { gapi } from 'gapi-script';
-import jwt_decode from "jwt-decode";
 
 import { client } from '../client';
 

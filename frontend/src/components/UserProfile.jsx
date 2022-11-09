@@ -11,6 +11,15 @@ import Spinner from './Spinner';
 const activeBtnStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none';
 const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
 
+const { uniqueNamesGenerator, adjectives, colors, animals } = require('unique-names-generator');
+
+const shortName = uniqueNamesGenerator({
+  dictionaries: [adjectives, animals, colors], // colors can be omitted here as not used
+  length: 2,
+  style: 'capital',
+  separator: ' '
+}); // big-donkey
+
 const UserProfile = () => {
   const [user, setUser] = useState();
   const [pins, setPins] = useState();
@@ -69,7 +78,8 @@ const UserProfile = () => {
             />
           </div>
           <h1 className="font-bold text-3xl text-center mt-3">
-            {user.userName}
+            {/*user.userName*/}
+            {shortName}
           </h1>
           <div className="absolute top-0 z-1 right-0 p-2">
             {userId === User.googleId && (

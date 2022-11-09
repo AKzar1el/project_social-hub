@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import shareVideo from '../assets/share.mp4';
+import shareVideo from '../assets/black.mp4';
 import logo from '../assets/logowhite.png';
 import { gapi } from 'gapi-script';
+import jwt_decode from "jwt-decode";
 
 import { client } from '../client';
 
@@ -14,34 +16,36 @@ const Login = () => {
   useEffect(() => {
     const initClient = () => {
           gapi.client.init({
-          clientId: process.env.REACT_APP_GOOGLE_API_TOKEN,
-          scope: ''
+            clientId: process.env.REACT_APP_GOOGLE_API_TOKEN,
+            scope: ''
         });
      };
-     gapi.load('client:auth2', initClient);
+     gapi.load('client:auth', initClient);
   });
+
   const onSuccess = (res) => {
     setProfile(res.profileObj);
-    const doc = {
-      _id: profile.googleId,
-      _type: 'user',
-      userName: profile.name,
-      image: profile.imageUrl,
-      email: profile.email,
-      firstName: profile.familyName,
-      lastName: profile.givenName
-    };
-    client.createIfNotExists(doc).then(() => {
-      navigate('/', { replace: true });
-    });
+    console.log((profile.googleId) > 1);
+    localStorage.setItem('user', JSON.stringify(res.profileObj));
+    if ( (profile.googleId) > 1 ) {
+      const doc = {
+        _type: 'user',
+        _id: profile.googleId,
+        userName: profile.name,
+        image: profile.imageUrl,
+        email: profile.email,
+        firstName: profile.familyName,
+        lastName: profile.givenName,
+      };
+      client.createOrReplace(doc).then(() => {
+        navigate('/', { replace: true });
+      });
+    } 
   };
   const onFailure = (err) => {
     console.log('failed:', err);
   };
-  const logOut = () => {
-    setProfile(null);
-  };
-  
+
   return (
     <div className="flex justify-start items-center flex-col h-screen">
       <div className=" relative w-full h-full">
@@ -61,7 +65,7 @@ const Login = () => {
           </div>
 
           <div className="shadow-2xl">
-            <GoogleLogin
+          <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
               render={(renderProps) => (
                 <button

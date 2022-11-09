@@ -4,8 +4,7 @@ import * as Loader from "react-loader-spinner";
 function Spinner({ message }) {
   return (
     <div className="flex flex-col justify-center items-center w-full h-full">
-      <Loader
-        type="Circles"
+      <Loader.Circles
         color="#00BFFF"
         height={50}
         width={200}

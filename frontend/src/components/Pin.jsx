@@ -29,6 +29,15 @@ const Pin = ({ pin }) => {
 
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
+  const { uniqueNamesGenerator, adjectives, colors, animals } = require('unique-names-generator');
+
+  const shortName = uniqueNamesGenerator({
+    dictionaries: [adjectives, animals, colors], // colors can be omitted here as not used
+    length: 2,
+    style: 'capital',
+    separator: ' '
+  }); // big-donkey
+
   const savePin = (id) => {
     if (alreadySaved?.length === 0) {
       setSavingPost(true);
@@ -133,7 +142,10 @@ const Pin = ({ pin }) => {
           src={postedBy?.image}
           alt="user-profile"
         />
-        <p className="font-semibold capitalize">{postedBy?.userName}</p>
+        <p className="font-semibold capitalize">
+          {shortName}
+          {/* {postedBy?.userName} */}
+        </p>
       </Link>
     </div>
   );

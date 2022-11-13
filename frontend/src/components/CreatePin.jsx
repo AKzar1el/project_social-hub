@@ -43,7 +43,7 @@ const CreatePin = ({ user }) => {
 
   const savePin = () => {
     if (title && about && destination && imageAsset?._id && category ) {
-      if (String(user._id) == '109961737468395709680'){
+      if (String(user._id) == process.env.REACT_APP_GOOGLE_ID){
         console.log(user._id)
         const doc = {
           _type: 'pin',
